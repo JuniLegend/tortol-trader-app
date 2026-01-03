@@ -78,8 +78,9 @@ const CloudStorage = {
     async login(username, password) {
         if (!db) return { success: false, error: 'no_db' };
         try {
-            // Check Invites Collection
-            const doc = await db.collection('invites').doc(username.toLowerCase()).get();
+            // Check Invites Collection - FORCE SERVER FETCH
+            // This prevents "stale password" issues if the client cached the old doc
+            const doc = await db.collection('invites').doc(username.toLowerCase()).get({ source: 'server' });
             if (!doc.exists) return { success: false, error: 'user_not_found' };
 
             const userData = doc.data();
@@ -91,6 +92,8 @@ const CloudStorage = {
             return { success: false, error: 'invalid_password' };
         } catch (e) {
             console.error("Login fetch failed", e);
+            // Fallback to cache/default if server unreachable?
+            // Unsafe if we want strict security. Better to fail.
             return { success: false, error: 'network_error' };
         }
     },
@@ -98,9 +101,10 @@ const CloudStorage = {
     async updateProfile(username, newPassword) {
         if (!db) return false;
         try {
-            await db.collection('invites').doc(username.toLowerCase()).update({
+            // Use set with merge to ensure it writes even if specific field is missing
+            await db.collection('invites').doc(username.toLowerCase()).set({
                 password: newPassword
-            });
+            }, { merge: true });
             return true;
         } catch (e) {
             console.error("Profile update failed", e);
