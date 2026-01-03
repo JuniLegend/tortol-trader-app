@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Performance Calendar - TraderLog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-border": "#2e3c54",
+                        "loss-red": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for better aesthetics in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111722;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2e3c54;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f5170;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-hidden">
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Side Navigation -->
+        <aside
+            class="flex w-64 flex-col border-r border-[#e5e7eb] dark:border-surface-border bg-white dark:bg-[#111722] shrink-0 transition-all duration-300">
+            <div class="flex h-full flex-col justify-between p-4">
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-3 px-2">
+                        <div class="bg-center bg-no-repeat bg-cover rounded-xl size-10 bg-primary/20 flex items-center justify-center text-primary"
+                            data-alt="Abstract geometric logo in blue"
+                            style="background-image: linear-gradient(135deg, rgba(19, 91, 236, 0.2) 0%, rgba(19, 91, 236, 0.1) 100%);">
+                            <span class="material-symbols-outlined text-primary">analytics</span>
+                        </div>
+                        <h1 class="text-slate-900 dark:text-white text-xl font-bold tracking-tight">TraderLog</h1>
+                    </div>
+                    <nav class="flex flex-col gap-2">
+                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors group"
+                            href="#">
+                            <span
+                                class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+                            <span class="text-sm font-medium">Dashboard</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors group"
+                            href="#">
+                            <span
+                                class="material-symbols-outlined group-hover:text-primary transition-colors">menu_book</span>
+                            <span class="text-sm font-medium">Journal</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-white dark:bg-primary"
+                            href="#">
+                            <span class="material-symbols-outlined fill-1">calendar_month</span>
+                            <span class="text-sm font-medium">Calendar</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors group"
+                            href="#">
+                            <span
+                                class="material-symbols-outlined group-hover:text-primary transition-colors">bar_chart</span>
+                            <span class="text-sm font-medium">Reports</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors group"
+                            href="#">
+                            <span
+                                class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+                            <span class="text-sm font-medium">Settings</span>
+                        </a>
+                    </nav>
+                </div>
+                <div
+                    class="flex items-center gap-3 px-3 py-3 border-t border-[#e5e7eb] dark:border-surface-border mt-auto">
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-primary/20"
+                        data-alt="User avatar placeholder showing a person silhouette"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiA7ZVtRb8PYfOf_N9YkqkFUdJ6Nl_itShrf-gadcTo2TLXdwKMK_mmubcgOBGP662apYuguK3eNq5vSpoIoaAMqcCPrC2XvtKEj-sXXFiyAD5TDi2zzuMaPYexYaMD4qqAAhUnSxKmU6nspM_HN_awluBJPPT11hah_fYusW3cztoM7UtN807YjiPt9GZkw65JyCUEFFzceqVvhzg-cmVXmVf1X5latluongjZ-oTEGcVVmmNdNDrG-hezLqEg0rTfUB3eXnGPbqH");'>
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-slate-900 dark:text-white text-sm font-bold">Alex Trader</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs">Pro Plan</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full min-w-0 overflow-y-auto">
+            <!-- Header Section -->
+            <header class="flex flex-col gap-6 px-8 pt-8 pb-4">
+                <div class="flex flex-wrap justify-between items-end gap-4">
+                    <div class="flex flex-col gap-1">
+                        <h2 class="text-slate-900 dark:text-white text-3xl font-black tracking-tight">Performance
+                            Calendar</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-base">Analyze your daily drawdowns and find
+                            patterns.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button
+                            class="flex items-center gap-2 px-4 h-10 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border text-slate-700 dark:text-white text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">file_download</span>
+                            Export
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-4 h-10 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                            Log Trade
+                        </button>
+                    </div>
+                </div>
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div
+                        class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#1a2332] border border-slate-200 dark:border-surface-border shadow-sm">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Net P&amp;L (MTD)</p>
+                        <div class="flex items-baseline gap-2">
+                            <p class="text-loss-red text-2xl font-bold tracking-tight font-mono">-$4,250.00</p>
+                            <span
+                                class="text-xs font-medium px-1.5 py-0.5 rounded bg-loss-red/10 text-loss-red">-12%</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#1a2332] border border-slate-200 dark:border-surface-border shadow-sm">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Worst Day</p>
+                        <div class="flex items-baseline gap-2">
+                            <p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">Oct 12</p>
+                            <span class="text-xs text-loss-red font-mono">(-$1,240)</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#1a2332] border border-slate-200 dark:border-surface-border shadow-sm">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Win Rate (Loss Focus)</p>
+                        <div class="flex items-baseline gap-2">
+                            <p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight">32%</p>
+                            <span class="text-xs text-slate-500 dark:text-slate-500">68% Losing Trades</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col gap-1 p-5 rounded-xl bg-white dark:bg-[#1a2332] border border-slate-200 dark:border-surface-border shadow-sm">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg Loss Trade</p>
+                        <p class="text-slate-900 dark:text-white text-2xl font-bold tracking-tight font-mono">-$145.50
+                        </p>
+                    </div>
+                </div>
+                <!-- Filters & Month Nav -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-2">
+                    <!-- Chip Filters -->
+                    <div class="flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                        <button
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium transition-colors whitespace-nowrap">
+                            All Assets
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors whitespace-nowrap">
+                            Crypto
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors whitespace-nowrap">
+                            Forex
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors whitespace-nowrap">
+                            Stocks
+                        </button>
+                    </div>
+                    <!-- Month Navigation -->
+                    <div
+                        class="flex items-center bg-white dark:bg-surface-dark rounded-lg border border-slate-200 dark:border-surface-border p-1 shadow-sm">
+                        <button
+                            class="p-1 hover:bg-slate-100 dark:hover:bg-[#2e3c54] rounded text-slate-500 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                        </button>
+                        <span
+                            class="px-4 text-sm font-bold text-slate-900 dark:text-white min-w-[120px] text-center">October
+                            2023</span>
+                        <button
+                            class="p-1 hover:bg-slate-100 dark:hover:bg-[#2e3c54] rounded text-slate-500 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <!-- Calendar & Sidebar Layout -->
+            <div class="flex flex-1 overflow-hidden px-8 pb-8 gap-6">
+                <!-- Calendar Grid Container -->
+                <div
+                    class="flex-1 flex flex-col bg-white dark:bg-[#1a2332] rounded-xl border border-slate-200 dark:border-surface-border shadow-sm overflow-hidden h-full">
+                    <!-- Weekday Header -->
+                    <div
+                        class="grid grid-cols-7 border-b border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-[#151b26]">
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Sun</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Mon</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Tue</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Wed</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Thu</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Fri</div>
+                        <div
+                            class="py-3 text-center text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 tracking-wider">
+                            Sat</div>
+                    </div>
+                    <!-- Days Grid -->
+                    <div
+                        class="grid grid-cols-7 flex-1 auto-rows-fr bg-slate-200 dark:bg-surface-border gap-px border-b border-l border-r border-slate-200 dark:border-surface-border">
+                        <!-- Previous Month Days (faded) -->
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] opacity-40 cursor-default">
+                            <span class="text-slate-400 dark:text-slate-500 text-sm font-medium">29</span>
+                        </div>
+                        <!-- Current Month Days -->
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">1</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">2</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">2
+                                    Trades</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-xs font-bold font-mono">-$240.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-orange-500" title="Crypto"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">3</span>
+                            </div>
+                            <!-- Empty day but clickable -->
+                            <div
+                                class="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">add_circle</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">4</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">1
+                                    Trade</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-emerald-500 text-xs font-bold font-mono">+$120.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-blue-500" title="Stocks"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Selected Day -->
+                        <div
+                            class="bg-primary/5 dark:bg-primary/10 p-2 min-h-[100px] relative group transition-colors cursor-pointer border-2 border-primary z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-primary dark:text-primary text-sm font-bold">5</span>
+                                <span
+                                    class="text-[10px] bg-primary/20 text-primary dark:text-white px-1.5 py-0.5 rounded font-bold">4
+                                    Trades</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-sm font-bold font-mono">-$850.50</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-orange-500" title="Crypto"></div>
+                                    <div class="size-1.5 rounded-full bg-orange-500" title="Crypto"></div>
+                                    <div class="size-1.5 rounded-full bg-purple-500" title="Forex"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">6</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">2
+                                    Trades</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-xs font-bold font-mono">-$120.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-blue-500" title="Stocks"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">7</span>
+                        </div>
+                        <!-- Week 2 -->
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">8</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">9</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">10</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">3
+                                    Trades</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-xs font-bold font-mono">-$310.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-purple-500" title="Forex"></div>
+                                    <div class="size-1.5 rounded-full bg-purple-500" title="Forex"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">11</span>
+                        </div>
+                        <div
+                            class="bg-loss-red/5 dark:bg-loss-red/10 p-2 min-h-[100px] relative group hover:bg-loss-red/10 transition-colors cursor-pointer border-2 border-loss-red/20 hover:border-loss-red/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">12</span>
+                                <span
+                                    class="text-[10px] bg-loss-red/20 text-loss-red font-bold px-1.5 py-0.5 rounded">WORST</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-sm font-bold font-mono">-$1,240.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-orange-500" title="Crypto"></div>
+                                    <div class="size-1.5 rounded-full bg-orange-500" title="Crypto"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">13</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">14</span>
+                        </div>
+                        <!-- Week 3 (simplified for brevity but layout is consistent) -->
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">15</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">16</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">1
+                                    Trade</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-emerald-500 text-xs font-bold font-mono">+$450.00</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">17</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">18</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">19</span>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">20</span>
+                                <span
+                                    class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded">2
+                                    Trades</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-loss-red text-xs font-bold font-mono">-$220.00</p>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="size-1.5 rounded-full bg-blue-500" title="Stock"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] relative group hover:bg-slate-50 dark:hover:bg-[#232f48] transition-colors cursor-pointer border-2 border-transparent hover:border-primary/50 hover:z-10">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-medium">21</span>
+                        </div>
+                        <!-- Fillers for rest of month -->
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">22</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">23</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">24</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">25</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">26</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">27</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">28</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">29</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">30</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] p-2 min-h-[100px] border-2 border-transparent"><span
+                                class="text-slate-700 dark:text-slate-300 text-sm font-medium">31</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] opacity-40 p-2 min-h-[100px]"><span
+                                class="text-slate-400 dark:text-slate-500 text-sm font-medium">1</span></div>
+                        <div class="bg-white dark:bg-[#1a2332] opacity-40 p-2 min-h-[100px]"><span
+                                class="text-slate-400 dark:text-slate-500 text-sm font-medium">2</span></div>
+                    </div>
+                </div>
+                <!-- Detail Side Panel -->
+                <div
+                    class="w-96 flex flex-col bg-white dark:bg-[#1a2332] rounded-xl border border-slate-200 dark:border-surface-border shadow-lg overflow-hidden shrink-0">
+                    <div
+                        class="p-5 border-b border-slate-200 dark:border-surface-border flex justify-between items-center bg-slate-50/50 dark:bg-[#151b26]/50">
+                        <div>
+                            <h3 class="text-slate-900 dark:text-white font-bold text-lg">Oct 5, 2023</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Thursday - 4 Trades</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-loss-red font-bold text-xl font-mono">-$850.50</p>
+                            <p class="text-xs text-loss-red font-medium text-right">-12% acct</p>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+                        <!-- Trade Card 1 -->
+                        <div
+                            class="group relative flex flex-col gap-3 rounded-lg border border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-[#111722] p-4 hover:border-primary/30 transition-colors">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-orange-500/20 p-1.5 rounded-md text-orange-500">
+                                        <span class="material-symbols-outlined text-lg">currency_bitcoin</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-900 dark:text-white font-bold text-sm">BTC/USD</p>
+                                        <p class="text-slate-500 text-xs">Long • 10:45 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-loss-red font-bold font-mono">-$450.00</p>
+                                    <p class="text-slate-500 text-xs">-1.5R</p>
+                                </div>
+                            </div>
+                            <div class="h-px w-full bg-slate-200 dark:bg-surface-border"></div>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 rounded bg-slate-200 dark:bg-[#2e3c54] text-slate-600 dark:text-slate-300 text-xs font-medium">FOMO</span>
+                                <span
+                                    class="px-2 py-1 rounded bg-slate-200 dark:bg-[#2e3c54] text-slate-600 dark:text-slate-300 text-xs font-medium">No
+                                    Stop Loss</span>
+                            </div>
+                            <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button class="text-slate-400 hover:text-white"><span
+                                        class="material-symbols-outlined text-lg">edit</span></button>
+                            </div>
+                        </div>
+                        <!-- Trade Card 2 -->
+                        <div
+                            class="group relative flex flex-col gap-3 rounded-lg border border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-[#111722] p-4 hover:border-primary/30 transition-colors">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-orange-500/20 p-1.5 rounded-md text-orange-500">
+                                        <span class="material-symbols-outlined text-lg">token</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-900 dark:text-white font-bold text-sm">ETH/USD</p>
+                                        <p class="text-slate-500 text-xs">Short • 02:15 PM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-loss-red font-bold font-mono">-$120.50</p>
+                                    <p class="text-slate-500 text-xs">-0.5R</p>
+                                </div>
+                            </div>
+                            <div class="h-px w-full bg-slate-200 dark:bg-surface-border"></div>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 rounded bg-slate-200 dark:bg-[#2e3c54] text-slate-600 dark:text-slate-300 text-xs font-medium">Execution
+                                    Error</span>
+                            </div>
+                        </div>
+                        <!-- Trade Card 3 (Winner for contrast) -->
+                        <div
+                            class="group relative flex flex-col gap-3 rounded-lg border border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-[#111722] p-4 hover:border-primary/30 transition-colors opacity-75">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-purple-500/20 p-1.5 rounded-md text-purple-500">
+                                        <span class="material-symbols-outlined text-lg">euro</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-900 dark:text-white font-bold text-sm">EUR/USD</p>
+                                        <p class="text-slate-500 text-xs">Long • 09:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-emerald-500 font-bold font-mono">+$250.00</p>
+                                    <p class="text-slate-500 text-xs">+2.0R</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Trade Card 4 -->
+                        <div
+                            class="group relative flex flex-col gap-3 rounded-lg border border-slate-200 dark:border-surface-border bg-slate-50 dark:bg-[#111722] p-4 hover:border-primary/30 transition-colors">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-purple-500/20 p-1.5 rounded-md text-purple-500">
+                                        <span class="material-symbols-outlined text-lg">currency_pound</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-900 dark:text-white font-bold text-sm">GBP/JPY</p>
+                                        <p class="text-slate-500 text-xs">Short • 04:30 PM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-loss-red font-bold font-mono">-$530.00</p>
+                                    <p class="text-slate-500 text-xs">-1.8R</p>
+                                </div>
+                            </div>
+                            <div class="h-px w-full bg-slate-200 dark:bg-surface-border"></div>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 rounded bg-slate-200 dark:bg-[#2e3c54] text-slate-600 dark:text-slate-300 text-xs font-medium">Revenge
+                                    Trade</span>
+                                <span
+                                    class="px-2 py-1 rounded bg-slate-200 dark:bg-[#2e3c54] text-slate-600 dark:text-slate-300 text-xs font-medium">Over-leveraged</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center justify-center p-4 border border-dashed border-slate-300 dark:border-slate-600 rounded-lg text-slate-500 dark:text-slate-400 text-sm hover:bg-slate-50 dark:hover:bg-[#232f48] cursor-pointer transition-colors">
+                            + Add retrospective note
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

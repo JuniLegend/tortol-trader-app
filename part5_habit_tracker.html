@@ -1,0 +1,180 @@
+<!-- VIEW: HABIT TRACKER -->
+<div id="view-habits" class="view-section hidden w-full max-w-[1440px] mx-auto pb-20 fade-in">
+    <!-- Header: Identity & Stats -->
+    <div class="mb-10 text-center">
+        <p class="text-indigo-400 font-bold tracking-widest uppercase text-xs mb-3">Protocol & Consistency</p>
+        <h2
+            class="text-3xl md:text-5xl font-black text-text-main-light dark:text-text-main-dark tracking-tight leading-tight mb-6">
+            Build Your <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-400">Edge</span>
+        </h2>
+
+        <!-- Global Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div
+                class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark p-4 rounded-xl text-center shadow-lg shadow-indigo-500/5">
+                <p
+                    class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-bold uppercase tracking-wider mb-1">
+                    Active Habits</p>
+                <p class="text-2xl font-black text-text-main-light dark:text-text-main-dark" id="stat-active-count">0
+                </p>
+            </div>
+            <div
+                class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark p-4 rounded-xl text-center shadow-lg shadow-emerald-500/5">
+                <p
+                    class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-bold uppercase tracking-wider mb-1">
+                    Perfect Days</p>
+                <p class="text-2xl font-black text-emerald-400" id="stat-perfect-days">0</p>
+            </div>
+            <div
+                class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark p-4 rounded-xl text-center shadow-lg shadow-amber-500/5">
+                <p
+                    class="text-[10px] text-text-muted-light dark:text-text-muted-dark font-bold uppercase tracking-wider mb-1">
+                    Current Streak</p>
+                <p class="text-2xl font-black text-amber-500 flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-xl">local_fire_department</span>
+                    <span id="stat-global-streak">0</span>
+                </p>
+            </div>
+            <button onclick="app.addHabitModal()"
+                class="bg-primary hover:bg-primary-dark text-white p-4 rounded-xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20 flex flex-col items-center justify-center gap-1 group">
+                <span
+                    class="material-symbols-outlined text-2xl group-hover:-translate-y-1 transition-transform">add_circle</span>
+                <span class="text-xs">New Protocol</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- LEFT COL: Good Habits Grid -->
+        <div class="lg:col-span-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-bold text-lg flex items-center gap-2 text-text-main-light dark:text-text-main-dark">
+                    <span class="material-symbols-outlined text-emerald-500">check_circle</span>
+                    Daily Protocols
+                </h3>
+                <span class="text-xs text-text-muted-light dark:text-text-muted-dark italic"
+                    id="date-display">Today</span>
+            </div>
+
+            <!-- Dynamic Habit Grid -->
+            <div id="habit-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Habits injected here -->
+                <div
+                    class="col-span-full p-12 text-center border-2 border-dashed border-border-light dark:border-border-dark rounded-xl">
+                    <span class="material-symbols-outlined text-4xl text-slate-600 mb-2">playlist_add_check</span>
+                    <p class="text-slate-500 font-medium">No habits defined yet.</p>
+                    <button onclick="app.addHabitModal()"
+                        class="mt-4 text-emerald-500 font-bold text-sm hover:underline">Create your first
+                        protocol</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COL: Bad Habits & Detail View -->
+        <div class="lg:col-span-4 space-y-8">
+
+            <!-- Bad Habits Section -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark border border-rose-500/20 rounded-2xl p-6 shadow-xl shadow-rose-900/5 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-5">
+                    <span class="material-symbols-outlined text-8xl text-rose-500">block</span>
+                </div>
+
+                <div class="flex justify-between items-center mb-6 relative z-10">
+                    <h3 class="font-bold text-lg text-rose-500 flex items-center gap-2">
+                        <span class="material-symbols-outlined">warning</span>
+                        The Anti-Protocol
+                    </h3>
+                    <button onclick="app.addBadHabitModal()"
+                        class="text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 px-3 py-1.5 rounded-lg transition-colors font-bold">
+                        + Track Leak
+                    </button>
+                </div>
+
+                <div id="bad-habit-list" class="space-y-3 relative z-10">
+                    <!-- Bad Habits injected here -->
+                </div>
+            </div>
+
+            <!-- Mini Tip Card (Rotates) -->
+            <div
+                class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-2xl p-6 border border-white/5 relative overflow-hidden">
+                <div class="absolute -bottom-10 -right-10 bg-indigo-500/20 w-32 h-32 rounded-full blur-3xl"></div>
+                <h4 class="text-indigo-300 font-bold text-xs uppercase tracking-wider mb-2">Atomic Strategy</h4>
+                <p class="text-slate-300 text-sm italic leading-relaxed">
+                    "You do not rise to the level of your goals. You fall to the level of your systems."
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: Add New Habit (Clean) -->
+<div id="modal-add-habit" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
+        onclick="document.getElementById('modal-add-habit').classList.add('hidden')"></div>
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-surface-light dark:bg-surface-dark rounded-2xl shadow-2xl border border-border-light dark:border-border-dark p-6">
+
+        <h3 class="text-lg font-bold mb-1 text-text-main-light dark:text-text-main-dark">Define Protocol</h3>
+        <p class="text-xs text-text-muted-light dark:text-text-muted-dark mb-6">What action builds your trader identity?
+        </p>
+
+        <form id="form-add-habit" onsubmit="event.preventDefault(); app.saveNewHabit();">
+            <div class="space-y-5">
+                <div>
+                    <label
+                        class="block text-[10px] font-bold uppercase text-text-muted-light dark:text-text-muted-dark mb-1.5">Habit
+                        Name</label>
+                    <input type="text" name="habit_name" placeholder="e.g. Review Previous Day Trades" required
+                        class="w-full bg-slate-100 dark:bg-slate-800 border overflow-hidden border-transparent focus:border-primary/50 text-text-main-light dark:text-text-main-dark rounded-lg px-4 py-3 outline-none transition-all">
+                </div>
+
+                <!-- Simple Frequency (Hidden complexity for now, assume Daily) -->
+
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button" onclick="document.getElementById('modal-add-habit').classList.add('hidden')"
+                        class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-6 py-2 rounded-lg text-sm font-bold bg-primary text-white hover:bg-primary-dark shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: Add Bad Habit -->
+<div id="modal-add-bad-habit" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
+        onclick="document.getElementById('modal-add-bad-habit').classList.add('hidden')"></div>
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-surface-light dark:bg-surface-dark rounded-2xl shadow-2xl border-2 border-rose-500/20 p-6">
+
+        <h3 class="text-lg font-bold mb-1 text-rose-500">Track Leak</h3>
+        <p class="text-xs text-text-muted-light dark:text-text-muted-dark mb-6">Identify behavior to eliminate.</p>
+
+        <form id="form-add-bad-habit" onsubmit="event.preventDefault(); app.saveBadHabit();">
+            <div class="space-y-4">
+                <div>
+                    <label
+                        class="block text-[10px] font-bold uppercase text-text-muted-light dark:text-text-muted-dark mb-1.5">Action
+                        to Avoid</label>
+                    <input type="text" name="bad_habit_name" placeholder="e.g. Revenge Trading" required
+                        class="w-full bg-slate-100 dark:bg-slate-800 border overflow-hidden border-transparent focus:border-rose-500/50 text-text-main-light dark:text-text-main-dark rounded-lg px-4 py-3 outline-none transition-all">
+                </div>
+
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button"
+                        onclick="document.getElementById('modal-add-bad-habit').classList.add('hidden')"
+                        class="px-4 py-2 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-6 py-2 rounded-lg text-sm font-bold bg-rose-500 text-white hover:bg-rose-600 shadow-lg shadow-rose-500/20 transition-all hover:-translate-y-0.5">Track</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Trade Journal List</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#192233",
+                        "border-dark": "#324467",
+                        "text-muted": "#92a4c9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for better look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #324467;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a6191;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="sticky top-0 z-50 flex w-full flex-col border-b border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark">
+        <div class="flex items-center justify-between px-6 py-3 lg:px-10">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 text-primary flex items-center justify-center rounded-lg bg-primary/10">
+                        <span class="material-symbols-outlined text-2xl">candlestick_chart</span>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-tight">TradeJournal</h2>
+                </div>
+                <nav class="hidden md:flex items-center gap-6">
+                    <a class="text-sm font-medium hover:text-primary transition-colors text-slate-500 dark:text-text-muted"
+                        href="#">Dashboard</a>
+                    <a class="text-sm font-medium text-primary" href="#">Journal</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors text-slate-500 dark:text-text-muted"
+                        href="#">Analytics</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors text-slate-500 dark:text-text-muted"
+                        href="#">Settings</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="hidden md:flex w-64 items-center rounded-lg bg-slate-100 dark:bg-background-dark px-3 py-2 border border-transparent focus-within:border-primary/50 transition-colors">
+                    <span
+                        class="material-symbols-outlined text-slate-400 dark:text-text-muted text-[20px]">search</span>
+                    <input
+                        class="ml-2 w-full bg-transparent text-sm placeholder-slate-400 dark:placeholder-text-muted focus:outline-none"
+                        placeholder="Search trades..." />
+                </div>
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-white dark:ring-border-dark cursor-pointer"
+                    data-alt="User avatar profile picture"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAgAh_HxYfKE5Bwy5-_QUPXcX7f3ZB6aZlbQo5YnYkCoZa9F0trj1ec2oHHuFeqrPQmDkECnDu6sU2kTH_U66uQoXq9KxHKFA3DYsBCBfnScSEFEcA0PsezsiWjEQZE89J7EDwoBnOTVsRnMteQyUEdluV9IkDRFgbJzOMAJlm2MHGViF7juahoQPBFfr7BF9dgshaNJDhgz6lHrzRw7CeaJYTXorNELx-bNUy2WUNOr1nqppwmtORDAAdE9cLY2PZPWS5y2nXv6jit");'>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-8">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div class="space-y-2">
+                <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Loss Analysis
+                    Journal</h1>
+                <p class="text-slate-500 dark:text-text-muted text-base max-w-2xl">
+                    Review your losing trades to identify patterns and improve performance.
+                    Honesty in logging is the first step to profitability.
+                </p>
+            </div>
+            <button
+                class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+                <span>Log New Trade</span>
+            </button>
+        </div>
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Stat Card 1 -->
+            <div
+                class="p-5 rounded-xl border border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm font-medium text-slate-500 dark:text-text-muted">Total Loss (Oct)</p>
+                    <span
+                        class="material-symbols-outlined text-red-500 bg-red-500/10 p-1 rounded text-[20px]">trending_down</span>
+                </div>
+                <p class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">-$2,450.00</p>
+                <p class="text-xs font-medium text-red-500 mt-1 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+                    12% vs last month
+                </p>
+            </div>
+            <!-- Stat Card 2 -->
+            <div
+                class="p-5 rounded-xl border border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm font-medium text-slate-500 dark:text-text-muted">Avg. Loss Per Trade</p>
+                    <span
+                        class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1 rounded text-[20px]">functions</span>
+                </div>
+                <p class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">-$125.00</p>
+                <p class="text-xs font-medium text-emerald-500 mt-1 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">arrow_drop_up</span>
+                    5% improvement
+                </p>
+            </div>
+            <!-- Stat Card 3 -->
+            <div
+                class="p-5 rounded-xl border border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm font-medium text-slate-500 dark:text-text-muted">Worst Asset Class</p>
+                    <span
+                        class="material-symbols-outlined text-purple-500 bg-purple-500/10 p-1 rounded text-[20px]">currency_bitcoin</span>
+                </div>
+                <p class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Crypto</p>
+                <p class="text-xs font-medium text-slate-500 dark:text-text-muted mt-1">
+                    65% of total losses
+                </p>
+            </div>
+            <!-- Stat Card 4 -->
+            <div
+                class="p-5 rounded-xl border border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-sm font-medium text-slate-500 dark:text-text-muted">Top Mistake</p>
+                    <span
+                        class="material-symbols-outlined text-blue-500 bg-blue-500/10 p-1 rounded text-[20px]">psychology_alt</span>
+                </div>
+                <p class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">FOMO Entry</p>
+                <p class="text-xs font-medium text-slate-500 dark:text-text-muted mt-1">
+                    Occurred in 8 trades
+                </p>
+            </div>
+        </div>
+        <!-- Filters & Search Toolbar -->
+        <div
+            class="flex flex-col lg:flex-row gap-4 lg:items-center justify-between bg-white dark:bg-surface-dark p-4 rounded-xl border border-gray-200 dark:border-border-dark">
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Asset Filter -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-slate-100 dark:bg-background-dark text-slate-700 dark:text-white border border-transparent hover:border-gray-300 dark:hover:border-border-dark transition-all">
+                        <span class="material-symbols-outlined text-[18px]">category</span>
+                        <span>All Assets</span>
+                        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                    </button>
+                </div>
+                <!-- Date Filter -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-slate-100 dark:bg-background-dark text-slate-700 dark:text-white border border-transparent hover:border-gray-300 dark:hover:border-border-dark transition-all">
+                        <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        <span>Last 30 Days</span>
+                        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                    </button>
+                </div>
+                <!-- Mistake Filter -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg bg-slate-100 dark:bg-background-dark text-slate-700 dark:text-white border border-transparent hover:border-gray-300 dark:hover:border-border-dark transition-all">
+                        <span class="material-symbols-outlined text-[18px]">error</span>
+                        <span>Any Mistake</span>
+                        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 w-full lg:w-auto">
+                <div class="relative flex-1 lg:w-64">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-text-muted text-[20px]">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-background-dark border-none rounded-lg text-sm focus:ring-1 focus:ring-primary dark:text-white placeholder-slate-400 dark:placeholder-text-muted"
+                        placeholder="Search by ticker (e.g. TSLA)" type="text" />
+                </div>
+                <button
+                    class="p-2 text-slate-500 hover:text-primary dark:text-text-muted dark:hover:text-white transition-colors"
+                    title="Export Data">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+            </div>
+        </div>
+        <!-- Trades Table -->
+        <div
+            class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr
+                            class="bg-slate-50 dark:bg-background-dark/50 border-b border-gray-200 dark:border-border-dark text-xs uppercase tracking-wider text-slate-500 dark:text-text-muted font-semibold">
+                            <th class="px-6 py-4 w-[120px]">Date</th>
+                            <th class="px-6 py-4 w-[140px]">Instrument</th>
+                            <th class="px-6 py-4 w-[100px]">Side</th>
+                            <th class="px-6 py-4 text-right w-[120px]">P/L</th>
+                            <th class="px-6 py-4">Mistake / Reason</th>
+                            <th class="px-6 py-4 w-[140px]">Emotional State</th>
+                            <th class="px-6 py-4 w-[100px] text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-border-dark text-sm">
+                        <!-- Row 1 -->
+                        <tr class="group hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-gray-300">Oct 24, 2023</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="size-6 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500">
+                                        <span class="material-symbols-outlined text-[14px]">currency_bitcoin</span>
+                                    </div>
+                                    <span class="font-medium text-slate-900 dark:text-white">BTC/USD</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Long
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-medium text-red-600 dark:text-red-400">
+                                -$450.00
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-slate-900 dark:text-white font-medium">Impulse entry on
+                                        wick</span>
+                                    <span
+                                        class="text-slate-500 dark:text-text-muted text-xs truncate max-w-[200px]">Didn't
+                                        wait for the 15m candle close confirmation.</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-slate-500 dark:text-text-muted">
+                                    <span
+                                        class="material-symbols-outlined text-[18px] text-amber-500">sentiment_stressed</span>
+                                    <span>Anxious</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div
+                                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-primary dark:hover:text-white">
+                                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                                    </button>
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-red-500 dark:hover:text-red-400">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr class="group hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-gray-300">Oct 22, 2023</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="size-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500">
+                                        <span class="material-symbols-outlined text-[14px]">show_chart</span>
+                                    </div>
+                                    <span class="font-medium text-slate-900 dark:text-white">TSLA</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                                    Short
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-medium text-red-600 dark:text-red-400">
+                                -$120.00
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-slate-900 dark:text-white font-medium">Revenge trading</span>
+                                    <span
+                                        class="text-slate-500 dark:text-text-muted text-xs truncate max-w-[200px]">Tried
+                                        to make back morning losses immediately.</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-slate-500 dark:text-text-muted">
+                                    <span
+                                        class="material-symbols-outlined text-[18px] text-red-500">sentiment_very_dissatisfied</span>
+                                    <span>Angry</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div
+                                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-primary dark:hover:text-white">
+                                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                                    </button>
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-red-500 dark:hover:text-red-400">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr class="group hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-gray-300">Oct 20, 2023</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="size-6 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
+                                        <span class="material-symbols-outlined text-[14px]">attach_money</span>
+                                    </div>
+                                    <span class="font-medium text-slate-900 dark:text-white">EUR/USD</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Long
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-medium text-red-600 dark:text-red-400">
+                                -$85.00
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-slate-900 dark:text-white font-medium">Ignored news event</span>
+                                    <span
+                                        class="text-slate-500 dark:text-text-muted text-xs truncate max-w-[200px]">Entered
+                                        right before CPI data release. Slippage hit stop.</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-slate-500 dark:text-text-muted">
+                                    <span
+                                        class="material-symbols-outlined text-[18px] text-blue-400">sentiment_neutral</span>
+                                    <span>Neutral</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div
+                                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-primary dark:hover:text-white">
+                                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                                    </button>
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-red-500 dark:hover:text-red-400">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 4 -->
+                        <tr class="group hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-gray-300">Oct 18, 2023</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="size-6 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500">
+                                        <span class="material-symbols-outlined text-[14px]">currency_bitcoin</span>
+                                    </div>
+                                    <span class="font-medium text-slate-900 dark:text-white">ETH/USD</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                                    Short
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-medium text-red-600 dark:text-red-400">
+                                -$620.00
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-slate-900 dark:text-white font-medium">Moved Stop Loss</span>
+                                    <span
+                                        class="text-slate-500 dark:text-text-muted text-xs truncate max-w-[200px]">Broke
+                                        rule #1. Hoped it would turn around.</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-slate-500 dark:text-text-muted">
+                                    <span
+                                        class="material-symbols-outlined text-[18px] text-purple-400">sentiment_worried</span>
+                                    <span>Fearful</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div
+                                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-primary dark:hover:text-white">
+                                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                                    </button>
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-red-500 dark:hover:text-red-400">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 5 -->
+                        <tr class="group hover:bg-slate-50 dark:hover:bg-background-dark/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-slate-700 dark:text-gray-300">Oct 15, 2023</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="size-6 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500">
+                                        <span class="material-symbols-outlined text-[14px]">show_chart</span>
+                                    </div>
+                                    <span class="font-medium text-slate-900 dark:text-white">NVDA</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Long
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-medium text-red-600 dark:text-red-400">
+                                -$315.00
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-slate-900 dark:text-white font-medium">Wrong position
+                                        sizing</span>
+                                    <span
+                                        class="text-slate-500 dark:text-text-muted text-xs truncate max-w-[200px]">Risked
+                                        5% instead of 1% on a B-grade setup.</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-slate-500 dark:text-text-muted">
+                                    <span
+                                        class="material-symbols-outlined text-[18px] text-green-500">sentiment_satisfied</span>
+                                    <span>Confident</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div
+                                    class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-primary dark:hover:text-white">
+                                        <span class="material-symbols-outlined text-[18px]">edit</span>
+                                    </button>
+                                    <button
+                                        class="p-1 hover:bg-slate-200 dark:hover:bg-background-dark rounded text-slate-500 dark:text-text-muted hover:text-red-500 dark:hover:text-red-400">
+                                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div
+                class="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-border-dark bg-slate-50 dark:bg-surface-dark">
+                <div class="text-sm text-slate-500 dark:text-text-muted">
+                    Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span
+                        class="font-medium text-slate-900 dark:text-white">5</span> of <span
+                        class="font-medium text-slate-900 dark:text-white">24</span> results
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="px-3 py-1 text-sm font-medium rounded border border-gray-300 dark:border-border-dark text-slate-700 dark:text-text-muted bg-white dark:bg-background-dark hover:bg-slate-50 dark:hover:bg-background-dark/80 disabled:opacity-50"
+                        disabled="">
+                        Previous
+                    </button>
+                    <button
+                        class="px-3 py-1 text-sm font-medium rounded border border-gray-300 dark:border-border-dark text-slate-700 dark:text-text-muted bg-white dark:bg-background-dark hover:bg-slate-50 dark:hover:bg-background-dark/80">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

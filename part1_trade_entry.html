@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trade Entry Form</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Noto+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#192233",
+                        "border-dark": "#324467",
+                        "text-secondary-dark": "#92a4c9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"],
+                        "body": ["Inter", "Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #324467; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475e8a; 
+        }input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#232f48] px-4 md:px-10 py-3 bg-white dark:bg-[#111722] sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">candlestick_chart</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">TradeJournal</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-medium" href="#">Journal</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Analytics</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold shadow-md hover:bg-blue-600 transition-all">
+<span class="truncate">New Entry</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-200 dark:ring-slate-700" data-alt="User profile avatar gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALrXhoaDPsq9kkw6r9q1R3aFyR9EZN-SwocN7Qy2suprqVPES669vvUGcul0ZJ2vZdPB8_OtCHVZTxil3tXNZ6jLwaVAwECl77ICO3saNiSXqtH9vGS4yrEkZyhKPCoI7FIYfx9Pbk30TtI9kSje6qRB9kqWNgBHd6vEnbaeUEJJnakvyB1fIrUEODz5IsLDFHP8pKaOZQFHF8itSmk5owYzVcqLIYtXaPRZg0U-orDBzf02VUFhWX09KgAxqp3ha2sYDCbxqiR_5j");'></div>
+</div>
+</header>
+<main class="flex-grow flex justify-center py-8 px-4 md:px-8">
+<div class="w-full max-w-[960px] flex flex-col gap-6">
+<div class="flex flex-col gap-2 pb-4 border-b border-slate-200 dark:border-[#232f48]">
+<div class="flex items-center gap-3 text-primary mb-1">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+<a class="text-sm font-medium hover:underline" href="#">Back to Dashboard</a>
+</div>
+<h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] text-slate-900 dark:text-white">New Trade Entry</h1>
+<p class="text-slate-500 dark:text-text-secondary-dark text-base font-normal">Reflect on this loss to improve future performance. Honest logging is the key to profitability.</p>
+</div>
+<form class="flex flex-col gap-8" onsubmit="event.preventDefault()">
+<div class="flex flex-col gap-5">
+<div class="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-lg">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<h3>Trade Details</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Date</p>
+<div class="relative">
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm" type="date"/>
+</div>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Time</p>
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm" type="time"/>
+</label>
+<label class="flex flex-col flex-1 lg:col-span-2">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Instrument</p>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-text-secondary-dark">search</span>
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 pl-11 pr-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm font-medium uppercase" placeholder="e.g. BTC/USD, TSLA, EURUSD" type="text"/>
+</div>
+</label>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Market Type</p>
+<div class="relative">
+<select class="form-select w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm appearance-none">
+<option>Crypto</option>
+<option>Forex</option>
+<option>Stocks</option>
+<option>Indices</option>
+<option>Commodities</option>
+</select>
+</div>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Session <span class="text-slate-400 dark:text-slate-500 font-normal ml-1">(Optional)</span></p>
+<select class="form-select w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm">
+<option selected="" value="">None</option>
+<option>New York</option>
+<option>London</option>
+<option>Asian (Tokyo/Sydney)</option>
+<option>Market Open</option>
+<option>Market Close</option>
+</select>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Direction</p>
+<div class="flex bg-slate-100 dark:bg-surface-dark rounded-lg p-1 border border-slate-300 dark:border-border-dark h-12">
+<button class="flex-1 rounded text-sm font-bold text-emerald-600 bg-white dark:bg-emerald-900/20 dark:text-emerald-400 shadow-sm border border-slate-200 dark:border-emerald-900" type="button">Long</button>
+<button class="flex-1 rounded text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5 transition-colors cursor-pointer" type="button">Short</button>
+</div>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-5 pt-4 border-t border-slate-200 dark:border-[#232f48]">
+<div class="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-lg">
+<span class="material-symbols-outlined text-primary">attach_money</span>
+<h3>Execution &amp; PnL</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Entry Price</p>
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm font-mono" placeholder="0.00" step="0.01" type="number"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Exit Price</p>
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm font-mono" placeholder="0.00" step="0.01" type="number"/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Position Size (Units)</p>
+<input class="form-input w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm font-mono" placeholder="0" step="any" type="number"/>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-5 pt-4 border-t border-slate-200 dark:border-[#232f48]">
+<div class="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-lg">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h3>Analysis &amp; Psychology</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Primary Error</p>
+<select class="form-select w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm">
+<option disabled="" selected="" value="">Select a reason...</option>
+<option>FOMO (Fear Of Missing Out)</option>
+<option>Revenge Trading</option>
+<option>Ignoring Stop Loss</option>
+<option>Technical Break</option>
+<option>Macro Event / News</option>
+<option>Poor Risk Management</option>
+<option>Executional Error (Fat Finger)</option>
+<option>Other</option>
+</select>
+<p class="text-xs text-slate-500 dark:text-text-secondary-dark mt-2">Be honest. This is for your eyes only.</p>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Emotional State at Entry</p>
+<div class="grid grid-cols-3 gap-2 h-12">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="emotion" type="radio"/>
+<div class="h-full w-full flex items-center justify-center rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-500 dark:text-text-secondary-dark peer-checked:bg-primary/10 peer-checked:border-primary peer-checked:text-primary transition-all text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/5">
+                                        Calm
+                                    </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="emotion" type="radio"/>
+<div class="h-full w-full flex items-center justify-center rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-500 dark:text-text-secondary-dark peer-checked:bg-yellow-500/10 peer-checked:border-yellow-500 peer-checked:text-yellow-500 transition-all text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/5">
+                                        Anxious
+                                    </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="emotion" type="radio"/>
+<div class="h-full w-full flex items-center justify-center rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-500 dark:text-text-secondary-dark peer-checked:bg-red-500/10 peer-checked:border-red-500 peer-checked:text-red-500 transition-all text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/5">
+                                        Greedy
+                                    </div>
+</label>
+</div>
+</label>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">What went wrong?</p>
+<textarea class="form-textarea w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm leading-relaxed h-32" placeholder="Describe the technical or psychological failure point..."></textarea>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-slate-700 dark:text-white text-sm font-medium pb-2">Actionable Takeaway (Lessons Learned)</p>
+<textarea class="form-textarea w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-900 dark:text-white p-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 dark:placeholder:text-text-secondary-dark text-sm leading-relaxed h-32" placeholder="What will you do differently next time? e.g., 'Wait for candle close before entering.'"></textarea>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-5 pt-4 border-t border-slate-200 dark:border-[#232f48]">
+<div class="flex items-center gap-2 text-slate-800 dark:text-white font-bold text-lg">
+<span class="material-symbols-outlined text-primary">add_photo_alternate</span>
+<h3>Chart Screenshot</h3>
+</div>
+<label class="flex w-full items-center justify-center rounded-xl border-2 border-dashed border-slate-300 dark:border-border-dark bg-slate-50 dark:bg-surface-dark/50 p-10 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors cursor-pointer group">
+<input accept="image/*" class="hidden" type="file"/>
+<div class="flex flex-col items-center gap-2 text-center">
+<div class="rounded-full bg-slate-200 dark:bg-[#232f48] p-3 text-slate-500 dark:text-text-secondary-dark group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">upload_file</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-slate-700 dark:text-white">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-500 dark:text-text-secondary-dark">SVG, PNG, JPG or GIF (max. 5MB)</p>
+</div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-end gap-4 pt-6 border-t border-slate-200 dark:border-[#232f48]">
+<button class="h-10 px-6 rounded-lg border border-slate-300 dark:border-border-dark text-slate-700 dark:text-white text-sm font-bold hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
+                        Discard
+                    </button>
+<button class="h-10 px-8 rounded-lg bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 hover:shadow-primary/40 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">save</span>
+                        Log Trade
+                    </button>
+</div>
+</form>
+</div>
+</main>
+</body></html>
