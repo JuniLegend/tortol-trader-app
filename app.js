@@ -4,13 +4,13 @@ const ADMIN_CREDS_KEY = 'traderlog_admin_creds_v1';
 
 // FIREBASE CONFIGURATION & CLOUD STORAGE
 const firebaseConfig = {
-    // TODO: Replace with your actual Firebase project configuration
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "your-project-id.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project-id.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
+    apiKey: "AIzaSyA7oXXQM59msi2QVNz3wn9_c8i_DZxPDA0",
+    authDomain: "tortol-trader-app.firebaseapp.com",
+    projectId: "tortol-trader-app",
+    storageBucket: "tortol-trader-app.firebasestorage.app",
+    messagingSenderId: "853825430758",
+    appId: "1:853825430758:web:aa7beee00078af33d34727",
+    measurementId: "G-1MT0N5JGKT"
 };
 
 // Initialize Firebase
@@ -171,6 +171,22 @@ const CloudStorage = {
             return true;
         } catch (e) {
             console.error("Reject failed", e);
+            return false;
+        }
+    },
+
+    async inviteUser(username) {
+        if (!db) return false;
+        try {
+            await db.collection('invites').doc(username.toLowerCase()).set({
+                username: username.toLowerCase(),
+                role: 'trader',
+                password: 'tortol123', // Default set explicitly
+                invitedAt: new Date().toISOString()
+            });
+            return true;
+        } catch (e) {
+            console.error("Invite failed", e);
             return false;
         }
     }
@@ -647,14 +663,23 @@ const app = {
         }
     },
 
-    adminAddUser() {
+    async adminAddUser() {
         const input = document.getElementById('new-user-input');
         const username = input.value.trim();
         if (!username) return;
 
-        this.addInvitedUser(username, 'trader', true);
-        input.value = '';
-        this.renderAdminUsers();
+        // Cloud Add
+        const success = await CloudStorage.inviteUser(username);
+
+        if (success) {
+            // Local fallback update for immediate UI feedback (optional but good)
+            this.addInvitedUser(username, 'trader', true);
+            alert(`User "${username}" invited!\n\nDefault Password: tortol123\n\nThey can login immediately.`);
+            input.value = '';
+            this.renderAdminUsers();
+        } else {
+            alert("Failed to invite user. Check Cloud connection.");
+        }
     },
 
     adminRemoveUser(username) {
