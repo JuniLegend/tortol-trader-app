@@ -76,24 +76,22 @@ const CloudStorage = {
     },
 
     async login(username, password) {
-        if (!db) return null;
+        if (!db) return { success: false, error: 'no_db' };
         try {
             // Check Invites Collection
             const doc = await db.collection('invites').doc(username.toLowerCase()).get();
-            if (!doc.exists) return null; // User not found
+            if (!doc.exists) return { success: false, error: 'user_not_found' };
 
             const userData = doc.data();
-            // Default password check (insecure plain text for prototype)
-            // Ideally use extensive Auth, but sticking to requested architecture
             const storedPass = userData.password || 'tortol123';
 
             if (password === storedPass) {
-                return userData;
+                return { success: true, user: userData };
             }
-            return null; // Invalid pass
+            return { success: false, error: 'invalid_password' };
         } catch (e) {
             console.error("Login fetch failed", e);
-            return null;
+            return { success: false, error: 'network_error' };
         }
     },
 
@@ -364,8 +362,10 @@ const app = {
 
         // 1. Cloud Check (Priority)
         // This ensures if password changed on cloud, we respect it.
-        const cloudUser = await CloudStorage.login(user, pass);
-        if (cloudUser) {
+        const result = await CloudStorage.login(user, pass);
+
+        if (result.success) {
+            const cloudUser = result.user;
             this.currentUser = { username: cloudUser.username, role: cloudUser.role || 'trader' };
             this.saveAuth();
 
@@ -398,7 +398,13 @@ const app = {
             return;
         }
 
-        // 2. Local Fallback (Only if Cloud failed or offline)
+        // 2. Error Handling
+        if (result.error === 'invalid_password' || result.error === 'user_not_found') {
+            alert("Invalid username or password.");
+            return;
+        }
+
+        // 3. Local Fallback (Only if Cloud failed or offline)
         // NOTE: If Cloud rejected password, we shouldn't really login locally either...
         // But for offline support, we check local storage.
         // Determining "Wrong Password" vs "Offline" is hard without more complex logic.
